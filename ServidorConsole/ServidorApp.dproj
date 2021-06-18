@@ -63,7 +63,7 @@
         <UsingDelphiRTL>true</UsingDelphiRTL>
         <Icon_MainIcon>$(BDS)\bin\delphi_PROJECTICON.ico</Icon_MainIcon>
         <Icns_MainIcns>$(BDS)\bin\delphi_PROJECTICNS.icns</Icns_MainIcns>
-        <DCC_UnitSearchPath>$(Horse);modules\.dcp;modules\.dcu;modules;modules\dataset-serialize\src;modules\factory-conection\FireDAC;modules\factory-conection\IBExpress;modules\factory-conection;modules\handle-exception\src;modules\horse\src;modules\horse-cors\src;modules\horse-etag\src;modules\horse-paginate\src;modules\horse-server-static\src;modules\jhonson\src;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+        <DCC_UnitSearchPath>$(Horse);$(DCC_UnitSearchPath);modules\.dcp;modules\.dcu;modules;modules\dataset-serialize\src;modules\factory-conection\FireDAC;modules\factory-conection\IBExpress;modules\factory-conection;modules\handle-exception\src;modules\horse\src;modules\horse-cors\src;modules\horse-etag\src;modules\horse-paginate\src;modules\horse-server-static\src;modules\jhonson\src</DCC_UnitSearchPath>
         <DCC_Framework>VCL;$(DCC_Framework)</DCC_Framework>
         <SanitizedProjectName>ServidorApp</SanitizedProjectName>
     </PropertyGroup>
@@ -99,7 +99,7 @@
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2_Linux64)'!=''">
         <DCC_Define>HORSE_DAEMON;$(DCC_Define)</DCC_Define>
-        <Debugger_Launcher>/usr/bin/xterm -e &quot;%debuggee%&quot;</Debugger_Launcher>
+        <Debugger_Launcher>/usr/bin/xterm -e "%debuggee%"</Debugger_Launcher>
         <Manifest_File>(None)</Manifest_File>
     </PropertyGroup>
     <ItemGroup>

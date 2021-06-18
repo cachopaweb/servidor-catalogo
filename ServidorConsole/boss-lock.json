@@ -4,8 +4,8 @@
 	"installedModules": {
 		"github.com/cachopaweb/horse-server-static": {
 			"name": "horse-server-static",
-			"version": "1.0.0",
-			"hash": "0817ca21a5209b95e96b861e26ef5fc7",
+			"version": "1.0.1",
+			"hash": "1374427289ebfe0a57c1bb7443ff3733",
 			"artifacts": {},
 			"failed": false,
 			"changed": false
@@ -20,16 +20,16 @@
 		},
 		"github.com/hashload/horse": {
 			"name": "horse",
-			"version": "2.0.8",
-			"hash": "f0d9be7d8b5059a6e99397562d39306c",
+			"version": "2.0.13",
+			"hash": "32daa5a81f115ecc285cbbbbdbcddcea",
 			"artifacts": {},
 			"failed": false,
 			"changed": false
 		},
 		"github.com/hashload/horse-cors": {
 			"name": "horse-cors",
-			"version": "1.0.2",
-			"hash": "f1fd91acb4d43c9a778249d447027f16",
+			"version": "1.0.3",
+			"hash": "248f37dd844f5a4c4ff78364e5a86027",
 			"artifacts": {},
 			"failed": false,
 			"changed": false
@@ -44,8 +44,8 @@
 		},
 		"https://github.com/bittencourtthulio/horse-etag": {
 			"name": "horse-etag",
-			"version": "master",
-			"hash": "69ccbf883d6af70440ae0b12c66ba696",
+			"version": "1.0.0",
+			"hash": "4b52175005c3dfa64075fed175d52877",
 			"artifacts": {},
 			"failed": false,
 			"changed": false
@@ -53,23 +53,23 @@
 		"https://github.com/bittencourtthulio/horse-paginate": {
 			"name": "horse-paginate",
 			"version": "master",
-			"hash": "112e2f64680ac9cbdcd6d9404c1bfaae",
+			"hash": "656379456f46183d89d9b6a74d8534f5",
 			"artifacts": {},
 			"failed": false,
 			"changed": false
 		},
 		"https://github.com/cachopaweb/factory-conection": {
 			"name": "factory-conection",
-			"version": "master",
-			"hash": "ec154e2fd28dbd263a03328378c5c36a",
+			"version": "1.0.0",
+			"hash": "b1a3abf71f9c7c039a471f401318039e",
 			"artifacts": {},
 			"failed": false,
 			"changed": false
 		},
 		"https://github.com/viniciussanchez/dataset-serialize": {
 			"name": "dataset-serialize",
-			"version": "v2.2.5",
-			"hash": "b6284eaed5c8d27d7ed4548baa128bef",
+			"version": "v2.3.1",
+			"hash": "7d7b64e27f7fbed029362b73f5bf21a4",
 			"artifacts": {},
 			"failed": false,
 			"changed": false

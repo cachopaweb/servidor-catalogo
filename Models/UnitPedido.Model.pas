@@ -37,7 +37,6 @@ type
     property Codigo: integer read FCodigo write FCodigo;
     property Cliente: integer read FCliente write FCliente;
     property Data: string read FData write FData;
-    property NumVenda: integer read FNumVenda write FNumVenda;
     property Itens: TArray<TItem> read FItens write FItens;
   end;
 
@@ -56,7 +55,7 @@ var
 begin
   Result := TPedido.Create;
   Query  := TFactoryConexaoFireDAC.New(TConstants.BaseURL, TConstants.Usuario, TConstants.Senha).Query;
-  Query.Add('SELECT PED_CODIGO, PED_CLI, PED_DATA, PED_NUM_VENDA, PAI_CODIGO, PAI_PRO, PAI_QUANTIDADE');
+  Query.Add('SELECT PED_CODIGO, PED_CLI, PED_DATA, PAI_CODIGO, PAI_PRO, PAI_QUANTIDADE');
   Query.Add('FROM PEDIDOS_APP JOIN PEDIDOS_APP_ITENS ON PED_CODIGO = PAI_PED');
   Query.Add('WHERE PED_CODIGO = :CODIGO');
   Query.Add('ORDER BY PAI_CODIGO');
@@ -68,7 +67,6 @@ begin
     Result.Codigo   := Query.DataSet.FieldByName('PED_CODIGO').AsInteger;
     Result.Cliente  := Query.DataSet.FieldByName('PED_CLI').AsInteger;
     Result.Data     := FormatDateTime('dd/mm/yyyy', Query.DataSet.FieldByName('PED_DATA').AsDateTime);
-    Result.NumVenda := Query.DataSet.FieldByName('PED_NUM_VENDA').AsInteger;
     Itens := [];
     Contador := 1;
     while not Query.DataSet.Eof do
@@ -103,12 +101,11 @@ begin
     Codigo := Query.DataSet.FieldByName('CODIGO').AsInteger+1;
     ////
     Query.Clear;
-    Query.Add('INSERT INTO PEDIDOS_APP (PED_CODIGO, PED_CLI, PED_DATA, PED_NUM_VENDA)');
-    Query.Add('VALUES (:CODIGO, :CLI, :DATA, :NUM_VENDA)');
+    Query.Add('INSERT INTO PEDIDOS_APP (PED_CODIGO, PED_CLI, PED_DATA)');
+    Query.Add('VALUES (:CODIGO, :CLI, :DATA)');
     Query.AddParam('CODIGO', Codigo);
     Query.AddParam('CLI', Cliente);
     Query.AddParam('DATA', Now);
-    Query.AddParam('NUM_VENDA', NumVenda);
     Query.ExecSQL;
     if Codigo > 0 then
     begin

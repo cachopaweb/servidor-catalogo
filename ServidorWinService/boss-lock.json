@@ -4,8 +4,8 @@
 	"installedModules": {
 		"github.com/cachopaweb/horse-server-static": {
 			"name": "horse-server-static",
-			"version": "1.0.0",
-			"hash": "0817ca21a5209b95e96b861e26ef5fc7",
+			"version": "1.0.1",
+			"hash": "1374427289ebfe0a57c1bb7443ff3733",
 			"artifacts": {},
 			"failed": false,
 			"changed": false
@@ -44,8 +44,8 @@
 		},
 		"https://github.com/bittencourtthulio/horse-etag": {
 			"name": "horse-etag",
-			"version": "master",
-			"hash": "69ccbf883d6af70440ae0b12c66ba696",
+			"version": "1.0.0",
+			"hash": "4b52175005c3dfa64075fed175d52877",
 			"artifacts": {},
 			"failed": false,
 			"changed": false
@@ -60,7 +60,7 @@
 		},
 		"https://github.com/cachopaweb/factory-conection": {
 			"name": "factory-conection",
-			"version": "master",
+			"version": "1.0.0",
 			"hash": "b1a3abf71f9c7c039a471f401318039e",
 			"artifacts": {},
 			"failed": false,
@@ -68,8 +68,8 @@
 		},
 		"https://github.com/viniciussanchez/dataset-serialize": {
 			"name": "dataset-serialize",
-			"version": "v2.3.0",
-			"hash": "916555f057218c63d26c06a3c0bd12f4",
+			"version": "v2.3.1",
+			"hash": "7d7b64e27f7fbed029362b73f5bf21a4",
 			"artifacts": {},
 			"failed": false,
 			"changed": false
