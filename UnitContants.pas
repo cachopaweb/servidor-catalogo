@@ -14,17 +14,17 @@ implementation
 
 class function TConstants.BaseURL: string;
 begin
-  Result := 'firebird03-farm1.kinghost.net:/firebird/palazzioculos1.gdb';
+  Result := '';
 end;
 
 class function TConstants.Senha: string;
 begin
-  Result := 'hwz7925p';
+  Result := '';
 end;
 
 class function TConstants.Usuario: string;
 begin
-  Result := 'PALAZZIOCULOS1';
+  Result := '';
 end;
 
 end.
