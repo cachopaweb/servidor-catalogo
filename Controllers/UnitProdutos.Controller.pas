@@ -58,9 +58,9 @@ begin
     Codigo := Req.Params.Items['codigo'].ToInteger;
     Query   := TDatabase.Query;
     Query.Clear;
-    Query.Add('SELECT PRO_DESCRICAO||''-''||PRO_TAMANHO MOD1, PRO_CODFORNECEDOR MOD2, FOR_NOME FORN, PRO_NOME NOME, PRO_VALORCM VL1, PRO_VALORC VL2,');
+    Query.Add('SELECT PRO_DESCRICAO||''-''||PRO_TAMANHO MOD1, COALESCE(PRO_CODFORNECEDOR, '''' ) MOD2, COALESCE(FOR_NOME, '''' ) FORN, PRO_NOME NOME, PRO_VALORCM VL1, PRO_VALORC VL2,');
     Query.Add('PRO_QUANTRESERVA RES, PRO_QUANTIDADEF QTD, PRO_DATAUC COMPRA, PRO_DATAUV ULTVENDA');
-    Query.Add('FROM PRODUTOS JOIN FORNECEDORES ON PRO_NFOR = FOR_NFORNECEDOR WHERE PRO_CODIGO = :CODIGO');
+    Query.Add('FROM PRODUTOS LEFT JOIN FORNECEDORES ON PRO_NFOR = FOR_NFORNECEDOR WHERE PRO_CODIGO = :CODIGO');
     Query.AddParam('CODIGO', Codigo);
     Query.Open;
     if not Query.DataSet.IsEmpty then
@@ -81,7 +81,7 @@ var
 begin
   Query   := TDatabase.Query;
   Query.Clear;
-  Query.Add('SELECT PRO_CODIGO CODIGO, PRO_DESCRICAO||''-''||PRO_TAMANHO MODELO, PRO_NOME NOME, ');
+  Query.Add('SELECT PRO_CODIGO CODIGO, PRO_DESCRICAO||''-''||PRO_TAMANHO MODELO, COALESCE(PRO_CODFORNECEDOR, '''' ) MOD2, PRO_NOME NOME, ');
   Query.Add('PRO_VALORVS VALOR, PRO_VALORC CUSTO, PRO_QUANTIDADEF QTD, PRO_DATAUV ULTVENDA ');
   Query.Add('FROM PRODUTOS WHERE PRO_ESTADO = ''ATIVO''');
   Query.Open;
@@ -94,6 +94,7 @@ begin
       oJson := TJSONObject.Create;
       oJson.AddPair('codigo', TJSONNumber.Create(Query.DataSet.FieldByName('CODIGO').AsInteger));
       oJson.AddPair('modelo', Query.DataSet.FieldByName('MODELO').AsString);
+      oJson.AddPair('mod2', Trim(Query.DataSet.FieldByName('MOD2').AsString));
       oJson.AddPair('nome', Query.DataSet.FieldByName('NOME').AsString);
       oJson.AddPair('valor', TJSONNumber.Create(Query.DataSet.FieldByName('VALOR').AsFloat));
       oJson.AddPair('custo', TJSONNumber.Create(Query.DataSet.FieldByName('CUSTO').AsFloat));
