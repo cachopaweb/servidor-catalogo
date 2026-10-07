@@ -8,10 +8,7 @@ uses
   SysUtils,
   System.Json,
   DB,
-  UnitConexao.Model.Interfaces,
-  UnitConexao.FireDAC.Model,
-  UnitQuery.FireDAC.Model,
-  UnitFactory.Conexao.FireDAC;
+  UnitConnection.Model.Interfaces;
 
 
 type
@@ -68,6 +65,17 @@ class procedure TPedidosController.Registrar;
 begin
   THorse.Get('/Pedidos/:codigo', Get);
   THorse.Post('/Pedidos', Post);
+  //versionamento
+  THorse.Group
+  			.Prefix('v1')
+        	.Route('/pedidos')
+          	.Post(Post)
+          .&End
+        .Group
+  			.Prefix('v1')
+        	.Route('/pedidos/:codigo')
+          	.Get(Get)
+          .&End;   
 end;
 
 end.

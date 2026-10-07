@@ -6,10 +6,14 @@ uses
   UnitProdutos.Controller in '..\Controllers\UnitProdutos.Controller.pas',
   Utils in '..\Utils.pas',
   UnitCatalogo.Controller in '..\Controllers\UnitCatalogo.Controller.pas',
-  UnitContants in '..\UnitContants.pas',
   UnitLogin.Controller in '..\Controllers\UnitLogin.Controller.pas',
   UnitPedido.Model in '..\Models\UnitPedido.Model.pas',
-  UnitPedidos.Controller in '..\Controllers\UnitPedidos.Controller.pas';
+  UnitPedidos.Controller in '..\Controllers\UnitPedidos.Controller.pas',
+  UnitUsuarios.Controller in '..\Controllers\UnitUsuarios.Controller.pas',
+  UnitClientes.Controller in '..\Controllers\UnitClientes.Controller.pas',
+  UnitConstants in '..\UnitConstants.pas',
+  UnitDatabase in '..\Database\UnitDatabase.pas',
+  UnitCidades.Controller in '..\Controllers\UnitCidades.Controller.pas';
 
 {$R *.RES}
 

@@ -4,8 +4,6 @@ program ServidorApp;
 
 uses
   System.SysUtils,
-  UnitConexao.Model.Interfaces,
-  UnitFactory.Conexao.FireDAC,
   Data.DB,
   System.Json,
   Horse.Jhonson,
@@ -15,30 +13,54 @@ uses
   Horse.Paginate,
   Horse,
   Horse.ServerStatic,
+  Horse.BasicAuthentication,
+  Horse.Logger,
+  Horse.Logger.Provider.Console,
   Utils in '..\Utils.pas',
+  UnitConstants in '..\UnitConstants.pas',
+  UnitPedido.Model in '..\Models\UnitPedido.Model.pas',
   UnitCatalogo.Controller in '..\Controllers\UnitCatalogo.Controller.pas',
+  UnitCidades.Controller in '..\Controllers\UnitCidades.Controller.pas',
+  UnitClientes.Controller in '..\Controllers\UnitClientes.Controller.pas',
   UnitLogin.Controller in '..\Controllers\UnitLogin.Controller.pas',
-  UnitProdutos.Controller in '..\Controllers\UnitProdutos.Controller.pas',
-  UnitContants in '..\UnitContants.pas',
   UnitPedidos.Controller in '..\Controllers\UnitPedidos.Controller.pas',
-  UnitPedido.Model in '..\Models\UnitPedido.Model.pas';
+  UnitProdutos.Controller in '..\Controllers\UnitProdutos.Controller.pas',
+  UnitUsuarios.Controller in '..\Controllers\UnitUsuarios.Controller.pas',
+  UnitDatabase in '..\Database\UnitDatabase.pas';
 
+var
+	LLogFileConfig: THorseLoggerConsoleConfig;
+  Porta: integer;
 begin
-  THorse.Use(CORS)
-        .Use(Jhonson)
-        .Use(ETag)
-        .Use(ServerStatic('Catalogo'));
+	// ReportMemoryLeaksOnShutdown := True;
+	LLogFileConfig := THorseLoggerConsoleConfig.New.SetLogFormat('${request_clientip} [${time}] ${response_status}');
+	try
+		THorseLoggerManager.RegisterProvider(THorseLoggerProviderConsole.New());
 
-  TProdutoController.Registrar;
-  TCatalogoController.Registrar;
-  TLoginController.Registrar;
-  TPedidosController.Registrar;
+    THorse.Use(CORS)
+          .Use(Jhonson)
+          .Use(ETag)
+          .Use(THorseLoggerManager.HorseCallback)
+          .Use(ServerStatic('Catalogo'));
 
-  THorse.Listen(9002,
-  procedure(App: THorse)
-  begin
-     Writeln('Servidor rodando na porta '+App.Port.ToString);
-     Readln;
-     App.StopListen;
-  end);
+    TProdutoController.Registrar;
+    TCatalogoController.Registrar;
+    TLoginController.Registrar;
+    TPedidosController.Registrar;
+    TUsuariosController.Registrar; 
+    TClientesController.Registrar;
+    TCidadesController.Registrar;
+
+    if GetEnvironmentVariable('PORT').IsEmpty then
+      Porta := 9002
+    else	
+      Porta := GetEnvironmentVariable('PORT').ToInteger;
+    THorse.Listen(Porta,
+    procedure
+    begin
+       Writeln('Servidor rodando na porta '+THorse.Port.ToString);     
+    end);
+  finally
+		LLogFileConfig.Free;
+	end;
 end.

@@ -12,8 +12,11 @@
 		"github.com/HashLoad/jhonson": "^1.0.7",
 		"github.com/cachopaweb/horse-server-static": "^1.0.1",
 		"https://github.com/bittencourtthulio/horse-etag": "^1.0.0",
-		"https://github.com/bittencourtthulio/horse-paginate": ">0.0.0",
-		"https://github.com/cachopaweb/factory-conection": "^1.0.0",
+		"https://github.com/bittencourtthulio/horse-paginate": "^1.0.5",
+		"https://github.com/cachopaweb/factory-connections": "^1.0.0",
+		"https://github.com/hashload/horse-basic-auth": "^v1.1.4",
+		"https://github.com/hashload/horse-logger": "^2.0.9",
+		"https://github.com/hashload/horse-logger-provider-console": "^1.0.9",
 		"https://github.com/viniciussanchez/dataset-serialize": "^v2.2.5"
 	}
 }

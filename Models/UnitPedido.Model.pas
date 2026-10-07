@@ -5,10 +5,7 @@ interface
 uses System.Json,
   SysUtils,
   DB,
-  UnitConexao.Model.Interfaces,
-  UnitConexao.FireDAC.Model,
-  UnitQuery.FireDAC.Model,
-  UnitFactory.Conexao.FireDAC;
+  UnitConnection.Model.Interfaces;
 
 type
   TItem = class
@@ -29,6 +26,7 @@ type
     FData: string;
     FNumVenda: integer;
     FItens: TArray<TItem>;
+    FUsuario: integer;
   public
     class function FromJsonString(Json: string): TPedido;
     function ToJson: string;
@@ -37,12 +35,13 @@ type
     property Codigo: integer read FCodigo write FCodigo;
     property Cliente: integer read FCliente write FCliente;
     property Data: string read FData write FData;
+    property Usuario: integer read FUsuario write FUsuario;
     property Itens: TArray<TItem> read FItens write FItens;
   end;
 
 implementation
 
-uses Rest.Json, UnitContants;
+uses Rest.Json, UnitConstants, UnitDatabase;
 
 { TPedido }
 
@@ -54,8 +53,8 @@ var
   Itens: TArray<TItem>;
 begin
   Result := TPedido.Create;
-  Query  := TFactoryConexaoFireDAC.New(TConstants.BaseURL, TConstants.Usuario, TConstants.Senha).Query;
-  Query.Add('SELECT PED_CODIGO, PED_CLI, PED_DATA, PAI_CODIGO, PAI_PRO, PAI_QUANTIDADE');
+  Query  := TDatabase.Query;
+  Query.Add('SELECT PED_CODIGO, PED_CLI, PED_DATA, PED_USU, PAI_CODIGO, PAI_PRO, PAI_QUANTIDADE');
   Query.Add('FROM PEDIDOS_APP JOIN PEDIDOS_APP_ITENS ON PED_CODIGO = PAI_PED');
   Query.Add('WHERE PED_CODIGO = :CODIGO');
   Query.Add('ORDER BY PAI_CODIGO');
@@ -67,6 +66,7 @@ begin
     Result.Codigo   := Query.DataSet.FieldByName('PED_CODIGO').AsInteger;
     Result.Cliente  := Query.DataSet.FieldByName('PED_CLI').AsInteger;
     Result.Data     := FormatDateTime('dd/mm/yyyy', Query.DataSet.FieldByName('PED_DATA').AsDateTime);
+    Result.Usuario  := Query.DataSet.FieldByName('PED_USU').AsInteger;
     Itens := [];
     Contador := 1;
     while not Query.DataSet.Eof do
@@ -94,18 +94,26 @@ var
   Query: iQuery;
   i: integer;
   ID: Integer;
+  CodigoIniciar: Integer;
 begin
   try
-    Query := TFactoryConexaoFireDAC.New(TConstants.BaseURL, TConstants.Usuario, TConstants.Senha).Query;
+    CodigoIniciar := 320001;
+    Query := TDatabase.Query;
     Query.Add('SELECT MAX(PED_CODIGO) CODIGO FROM PEDIDOS_APP').Open;
-    Codigo := Query.DataSet.FieldByName('CODIGO').AsInteger+1;
+    if Query.DataSet.FieldByName('CODIGO').AsInteger > 0 then
+    begin
+      Codigo := Query.DataSet.FieldByName('CODIGO').AsInteger+1;
+    end;
+    if Codigo < CodigoIniciar  then
+      Codigo := CodigoIniciar;
     ////
     Query.Clear;
-    Query.Add('INSERT INTO PEDIDOS_APP (PED_CODIGO, PED_CLI, PED_DATA)');
-    Query.Add('VALUES (:CODIGO, :CLI, :DATA)');
+    Query.Add('INSERT INTO PEDIDOS_APP (PED_CODIGO, PED_CLI, PED_DATA, PED_USU)');
+    Query.Add('VALUES (:CODIGO, :CLI, :DATA, :USUARIO)');
     Query.AddParam('CODIGO', Codigo);
     Query.AddParam('CLI', Cliente);
     Query.AddParam('DATA', Now);
+    Query.AddParam('USUARIO', Usuario);
     Query.ExecSQL;
     if Codigo > 0 then
     begin

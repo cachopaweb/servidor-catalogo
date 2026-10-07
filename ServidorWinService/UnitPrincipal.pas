@@ -44,7 +44,10 @@ implementation
 uses UnitProdutos.Controller,
      UnitCatalogo.Controller,
      UnitLogin.Controller,
-     UnitPedidos.Controller;
+     UnitPedidos.Controller, 
+     UnitUsuarios.Controller, 
+     UnitClientes.Controller,
+	   UnitCidades.Controller;
 
 procedure ServiceController(CtrlCode: DWord); stdcall;
 begin
@@ -69,6 +72,9 @@ begin
   TCatalogoController.Registrar;
   TLoginController.Registrar;
   TPedidosController.Registrar;
+  TUsuariosController.Registrar;
+  TClientesController.Registrar;
+  TCidadesController.Registrar;
 end;
 
 procedure TServicePalazzi.ServiceStart(Sender: TService; var Started: Boolean);
