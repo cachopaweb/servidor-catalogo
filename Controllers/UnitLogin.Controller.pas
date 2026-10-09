@@ -96,9 +96,19 @@ begin
     raise Exception.Create('Usuario ou senha não informados!');
   usuario := oJsonRequest.GetValue<string>('usuario');
   senha   := oJsonRequest.GetValue<string>('senha');
+
+  if (usuario.Trim.ToUpper = 'ADMIN') and (senha.Trim = '1234') then
+  begin
+    oJson := TJSONObject.Create;
+    oJson.AddPair('codigo', TJSONNumber.Create(1));
+    oJson.AddPair('nome', 'Administrador');
+    Res.Send<TJSONObject>(oJson);
+    Exit;
+  end;
+
   Query := TDatabase.Query;
   Query.Add('SELECT USU_CODIGO, USU_NOME FROM USUARIOS_APP JOIN CLIENTES ON USU_CLI = CLI_CODIGO ');
-  Query.Add('WHERE (UPPER(USU_NOME) = :USUARIO AND USU_SENHA = :SENHA) OR (:USUARIO = ''ADMIN'' AND :SENHA = ''1234'')');
+  Query.Add('WHERE UPPER(USU_NOME) = :USUARIO AND USU_SENHA = :SENHA');
   Query.AddParam('USUARIO', usuario.ToUpper);
   Query.AddParam('SENHA', senha);
   Query.Open;
